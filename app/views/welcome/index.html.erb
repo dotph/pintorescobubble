@@ -1,0 +1,137 @@
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    console.log('test');
+        var dragSrcEl = null;
+        
+        function handleDragStart(e) {
+            this.style.opacity = '0.4';
+            
+            dragSrcEl = this;
+    
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+    
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+            e.preventDefault();
+            }
+    
+            e.dataTransfer.dropEffect = 'move';
+            
+            return false;
+        }
+    
+        function handleDragEnter(e) {
+            this.classList.add('over');
+        }
+    
+        function handleDragLeave(e) {
+            this.classList.remove('over');
+        }
+    
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+            e.stopPropagation(); // stops the browser from redirecting.
+            }
+            
+            if (dragSrcEl != this) {
+            dragSrcEl.innerHTML = this.innerHTML;
+            this.innerHTML = e.dataTransfer.getData('text/html');
+            }
+            
+            return false;
+        }
+    
+        function handleDragEnd(e) {
+            this.style.opacity = '1';
+            
+            items.forEach(function (item) {
+            item.classList.remove('over');
+            });
+        }
+        
+        
+        let items = document.querySelectorAll('.container .box');
+        items.forEach(function(item) {
+            item.addEventListener('dragstart', handleDragStart, false);
+            item.addEventListener('dragenter', handleDragEnter, false);
+            item.addEventListener('dragover', handleDragOver, false);
+            item.addEventListener('dragleave', handleDragLeave, false);
+            item.addEventListener('drop', handleDrop, false);
+            item.addEventListener('dragend', handleDragEnd, false);
+        });
+        });
+</script>
+<h1>Test widgets</h1>
+<div class="container">
+    <div class="row">
+        <div  draggable="true" class="box col-sm">
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+                <div class="h4">Apple Stock</div>
+                <div id="tradingview_bc019"></div>
+                <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span class="blue-text">AAPL stock chart</span></a> by TradingView</div>
+                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                <script type="text/javascript">
+                new TradingView.widget(
+                {
+                "width": 400,
+                "height": 300,
+                "symbol": "NASDAQ:AAPL",
+                "interval": "1",
+                "timezone": "Etc/UTC",
+                "theme": "light",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "hide_top_toolbar": true,
+                "allow_symbol_change": true,
+                "save_image": false,
+                "details": true,
+                "container_id": "tradingview_bc019"
+                }
+                );
+                </script>
+            </div>
+            <!-- TradingView Widget END -->
+        </div>
+        <div  draggable="true" class="box col-sm">
+            <div class="h4">Tripadvisor Via Elfsight</div>
+            <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+            <div class="elfsight-app-fc998ff0-cc96-4c0b-9d6b-2c4ad09324c3"></div>
+        </div>
+        <div  draggable="true" class="box col-sm">
+            <div class="h4">Youtube Embed</div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/h2oNRj6hhGo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+    <div class="row">
+        <div  draggable="true" class="box col-sm">
+            <div class="h4">Google sheet embed</div>
+            <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRYjGOcq1tf5xnlUxu-ZSMRBlCGXjIndl1lGjjLcIhlG_waMG7lhlSIs-2Ttt6eoU9sY25nb1bdjE4U/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false" height="400"></iframe>
+        </div>
+        <div  draggable="true" class="box col-sm">
+            <div class="h4">Trello card embed</div>
+            <blockquote class="trello-card"><a href="https:&#x2F;&#x2F;trello.com&#x2F;c&#x2F;GqnJTsaS&#x2F;1-test-card">Test card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script>
+        </div>
+        <div  draggable="true" class="box col-sm">
+            <div class="h4">Google Drive PDF embed</div>
+            <iframe src="https://drive.google.com/file/d/1vQvnXZ_BnZeiTHGiEu4nKGc0w3lwGQ53/preview" width="400" height="480" allow="autoplay"></iframe>
+        </div>
+    </div>
+    <div class="row">
+        <div  class="box col-sm">
+            <div class="h4">Dropbox folder not draggable</div>
+            <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="nako0pzjj5igex0"></script>
+            <a href="https://www.dropbox.com/sh/1gtnxxotxgxe0ua/AACH_l6rOKdjLdldxo4hYDyia?dl=0" class="dropbox-embed" height="400"></a>
+        </div>
+        <div  draggable="true" class="box col-sm">
+            <div class="h4">Waze Embed</div>
+            <iframe src="https://embed.waze.com/iframe?zoom=17&lat=14.113374&lon=120.880637&ct=livemap&pin=1" width="400" height="300" allowfullscreen></iframe>
+        </div>
+        <div  draggable="true" class="box col-sm">
+        </div>
+    </div>
+</div>
